@@ -13,7 +13,6 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,14 +50,22 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 //        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
 
-        WorkManager.getInstance(this).getWorkInfosByTagLiveData("download").observe(this,
-                new Observer<List<WorkInfo>>() {
-                    public void onChanged(List<WorkInfo> workInfos){
-                        for (WorkInfo w: workInfos){
-                            Log.d(TAG, "onChanged: Work status: " + w.getState());
-                        }
-                    }
+//        WorkManager.getInstance(this).getWorkInfosByTagLiveData("download").observe(this,
+//                new Observer<List<WorkInfo>>() {
+//                    public void onChanged(List<WorkInfo> workInfos){
+//                        for (WorkInfo w: workInfos){
+//                            Log.d(TAG, "onChanged: Work status: " + w.getState());
+//                        }
+//                    }
+//
+//                });
 
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(downloadRequest.getId()).observe(this,
+                new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        Log.d(TAG, "onChanged: Work status: " + workInfo.getState());
+                    }
                 });
     }
 }
