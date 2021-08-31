@@ -67,5 +67,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onChanged: Work status: " + workInfo.getState());
                     }
                 });
+        WorkManager.getInstance(this).cancelWorkById(downloadRequest.getId());
     }
 }
