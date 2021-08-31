@@ -9,8 +9,6 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import java.util.concurrent.TimeUnit;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -29,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         OneTimeWorkRequest downloadRequest = new OneTimeWorkRequest.Builder(SampleWorker.class)
                 .setInputData(data)
-                .setConstraints(constraints)
-                .setInitialDelay(5, TimeUnit.HOURS)
+//                .setConstraints(constraints)
+//                .setInitialDelay(5, TimeUnit.HOURS)
                 .addTag("download")
                 .build();
 
