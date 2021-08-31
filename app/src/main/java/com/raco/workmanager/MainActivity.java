@@ -7,7 +7,10 @@ import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
-                .setRequiresCharging(true)
+//                .setRequiresCharging(true)
                 .build();
 
         OneTimeWorkRequest downloadRequest = new OneTimeWorkRequest.Builder(SampleWorker.class)
@@ -32,7 +35,15 @@ public class MainActivity extends AppCompatActivity {
                 .addTag("download")
                 .build();
 
-        WorkManager.getInstance(this).enqueue(downloadRequest);
+//        WorkManager.getInstance(this).enqueue(downloadRequest);
 
+        PeriodicWorkRequest periodicWorkRequest =
+                new PeriodicWorkRequest.Builder(SampleWorker.class,7, TimeUnit.DAYS)
+                .setInputData(data)
+                .setConstraints(constraints)
+                .addTag("periodic")
+//                .setInitialDelay(10, TimeUnit.HOURS)
+                .build();
+        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
     }
 }
